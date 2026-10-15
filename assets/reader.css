@@ -1,43 +1,66 @@
-/* 阅读位置与书签：沿用讲义的颜色变量、按钮与圆角 */
+/* 阅读位置与书签：沿用讲义的颜色变量、按钮与圆角；书签用荧光笔色常驻高亮 */
+:root{--mark:#f3e4bd;--mark-deep:#e8c97c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--mark:#463b22;--mark-deep:#6e5728}}
+:root[data-theme="dark"]{--mark:#463b22;--mark-deep:#6e5728}
+
+/* ---------- 正文里的书签高亮 ---------- */
+.content .rd-mark{--rd-base:var(--mark);background-color:var(--mark);box-shadow:0 0 0 5px var(--mark);border-radius:3px}
+/* 0.4 秒加深，停留 1.2 秒，再用 0.4 秒恢复。只变颜色、不移动，所以在“减少动态效果”设置下也保留 */
+.content .rd-pulse{border-radius:3px;animation:rd-pulse 2s ease-in-out!important}
+@keyframes rd-pulse{
+  0%,100%{background-color:var(--rd-base,transparent);box-shadow:0 0 0 5px var(--rd-base,transparent)}
+  20%,80%{background-color:var(--mark-deep);box-shadow:0 0 0 5px var(--mark-deep)}
+}
+
+/* ---------- 顶栏按钮 ---------- */
 .rd-bm-btn{position:relative}
 .rd-bm-btn.on{background:var(--surface)}
 .rd-count{position:absolute;top:1px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:var(--text);color:var(--bg);font-family:var(--f-sans);font-size:.66rem;font-weight:600;line-height:16px;text-align:center;font-variant-numeric:tabular-nums}
 .rd-count[hidden]{display:none}
 
-.rd-panel{position:fixed;z-index:70;top:calc(var(--top) + 8px);right:max(16px,calc((100vw - 1520px)/2 + 16px));width:368px;max-height:calc(100vh - var(--top) - 32px);overflow:auto;background:var(--bg);border:1px solid var(--border-2);border-radius:var(--radius);box-shadow:0 16px 48px -12px rgba(20,20,19,.18);padding:18px 16px 12px;font-family:var(--f-sans);font-size:.9rem;line-height:1.5;scrollbar-width:thin}
+/* ---------- 书签面板 ---------- */
+.rd-panel{position:fixed;z-index:70;top:calc(var(--top) + 8px);right:max(16px,calc((100vw - 1520px)/2 + 16px));width:380px;max-height:calc(100vh - var(--top) - 32px);display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--border-2);border-radius:14px;box-shadow:0 24px 64px -20px rgba(20,20,19,.22),0 2px 6px rgba(20,20,19,.04);font-family:var(--f-sans);font-size:.9rem;line-height:1.5;overflow:hidden;animation:rd-drop .16s ease-out}
 .rd-panel[hidden]{display:none}
-.rd-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 4px 14px}
-.rd-head h5{margin:0;font-size:1rem;font-weight:600}
-.rd-keys{font-size:.76rem;color:var(--text-3);white-space:nowrap}
-.rd-panel kbd,.rd-toast kbd{font-family:var(--f-mono);font-size:.7rem;padding:0 .45em;border:1px solid var(--border-2);border-radius:4px;background:var(--surface);color:var(--text-2)}
-.rd-add{width:100%;justify-content:center}
-.rd-add svg{width:16px;height:16px}
-.rd-list{list-style:none;margin:14px 0 0;padding:0}
-.rd-list li{position:relative;margin:0;border-top:1px solid var(--border)}
-.rd-item{display:grid;gap:2px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-radius:8px;padding:10px 64px 10px 10px;margin:3px 0;cursor:pointer}
-.rd-item:hover{background:var(--surface)}
+@keyframes rd-drop{from{opacity:0;transform:translateY(-4px)}}
+.rd-panel kbd,.rd-toast kbd{display:inline-grid;place-items:center;min-width:1.6em;height:1.6em;padding:0 .35em;font-family:var(--f-mono);font-size:.7rem;font-weight:500;line-height:1;border-radius:5px;background:var(--surface);color:var(--text-2);box-shadow:inset 0 -1px 0 var(--border-2)}
+
+.rd-head{display:flex;align-items:center;gap:6px;padding:14px 10px 12px 18px;border-bottom:1px solid var(--border)}
+.rd-head h5{margin:0 auto 0 0;font-size:1rem;font-weight:600;display:flex;align-items:baseline;gap:8px}
+.rd-n{font-size:.82rem;font-weight:500;color:var(--text-3);font-variant-numeric:tabular-nums}
+.rd-add{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.84rem;font-weight:500;color:var(--text);background:none;border:0;border-radius:8px;padding:6px 8px 6px 10px;cursor:pointer}
+.rd-add:hover{background:var(--surface)}
+.rd-add kbd{background:var(--bg);box-shadow:inset 0 0 0 1px var(--border-2)}
+.rd-close{width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:var(--text-3);cursor:pointer}
+.rd-close:hover{background:var(--surface);color:var(--text)}
+.rd-close svg{width:14px;height:14px}
+
+.rd-list{list-style:none;margin:0;padding:6px;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
+.rd-list li{position:relative;margin:0}
+.rd-item{display:grid;gap:4px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-radius:10px;padding:11px 12px 12px;cursor:pointer}
+.rd-item:hover,.rd-item:focus-visible{background:var(--surface);outline:none}
+.rd-meta{display:flex;justify-content:space-between;gap:12px;font-size:.76rem;color:var(--text-3)}
+.rd-meta span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rd-meta time{flex:none;font-variant-numeric:tabular-nums}
 .rd-name{font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rd-meta{font-size:.78rem;color:var(--text-2)}
-.rd-snip{font-family:var(--f-serif);font-size:.82rem;color:var(--text-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rd-acts{position:absolute;top:9px;right:4px;display:flex;gap:2px;opacity:0;transition:opacity .15s}
+.rd-snip{font-family:var(--f-serif);font-size:.84rem;line-height:1.65;color:var(--text-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rd-snip mark{background:var(--mark);color:inherit;padding:1px 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.rd-acts{position:absolute;top:30px;right:10px;display:flex;gap:2px;opacity:0;transition:opacity .15s}
 .rd-list li:hover .rd-acts,.rd-acts:focus-within{opacity:1}
 @media (hover:none){.rd-acts{opacity:1}}
-.rd-act{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:7px;background:none;color:var(--text-3);cursor:pointer}
-.rd-act:hover{background:var(--surface-2);color:var(--text)}
-.rd-act[data-act=del]:hover{background:var(--fig-soft);color:var(--fig)}
-.rd-act svg{width:15px;height:15px}
-.rd-input{display:block;width:100%;margin:6px 0;font:inherit;font-weight:600;color:var(--text);background:var(--bg);border:1px solid var(--text);border-radius:8px;padding:8px 10px;outline:none}
-.rd-empty{margin:14px 4px 4px;color:var(--text-2);font-size:.86rem;line-height:1.7}
+.rd-act{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:7px;background:var(--bg);color:var(--text-3);cursor:pointer;box-shadow:inset 0 0 0 1px var(--border-2)}
+.rd-act:hover{color:var(--text)}
+.rd-act[data-act=del]:hover{background:var(--fig-soft);color:var(--fig);box-shadow:none}
+.rd-act svg{width:14px;height:14px}
+.rd-input{display:block;width:100%;margin:0;font:inherit;font-weight:600;color:var(--text);background:var(--bg);border:1px solid var(--text);border-radius:6px;padding:3px 8px;outline:none}
 
-.content{position:relative}
-.rd-layer{position:absolute;inset:0 auto auto 0;width:0;height:0}
-.rd-pin{position:absolute;width:16px;height:20px;color:var(--text);cursor:pointer;margin-top:4px}
-.rd-pin svg{width:16px;height:20px;fill:var(--surface-2)}
-.rd-pin:hover svg{fill:var(--text)}
+.rd-empty{display:grid;justify-items:center;gap:10px;padding:32px 24px 28px;text-align:center;color:var(--text-2);font-size:.88rem;line-height:1.7}
+.rd-empty svg{width:28px;height:28px;color:var(--text-3)}
+.rd-empty p{margin:0}
 
-.rd-flash{animation:rd-flash 1.8s ease-out}
-@keyframes rd-flash{0%,35%{background-color:var(--surface-2);box-shadow:0 0 0 8px var(--surface-2)}100%{background-color:transparent;box-shadow:0 0 0 8px transparent}}
+.rd-foot{display:flex;flex-wrap:wrap;gap:4px 16px;padding:10px 18px 12px;border-top:1px solid var(--border);font-size:.76rem;color:var(--text-3)}
+.rd-foot span{display:inline-flex;align-items:center;gap:4px}
 
+/* ---------- 提示条 ---------- */
 .rd-toast{position:fixed;z-index:80;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(-50%);display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 10px 10px 20px;background:var(--text);color:var(--bg);border-radius:var(--radius);box-shadow:0 16px 48px -12px rgba(20,20,19,.35);font-family:var(--f-sans);font-size:.9rem;animation:rd-in .2s ease-out}
 .rd-toast[hidden]{display:none}
 .rd-toast-body{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;min-width:0;line-height:1.5}

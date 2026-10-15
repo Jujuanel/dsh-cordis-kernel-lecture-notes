@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/dsh-whale.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Serif+SC:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&family=Noto+Sans+SC:wght@300..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Noto+Serif+SC:wght@300..900&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* 版式参照 Anthropic Engineering 文章页：象牙白纸面、墨色文字、燕麦色面板；无衬线标题配衬线正文；
    结构靠粗墨线与留白区分，颜色只用来标明语义（提示框来源、图中的状态）。 */
@@ -59,7 +59,7 @@
 /* ---------- 基础排版 ---------- */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top) + 24px);-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-serif);font-size:17px;line-height:1.85;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-kerning:normal}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-serif);font-size:17px;font-weight:450;line-height:1.85;text-rendering:optimizeLegibility;font-kerning:normal}
 ::selection{background:var(--clay-soft)}
 a{color:inherit;text-decoration:underline;text-decoration-color:var(--border-2);text-decoration-thickness:1px;text-underline-offset:.22em;transition:text-decoration-color .15s}
 a:hover{text-decoration-color:currentColor}
@@ -70,13 +70,15 @@ li{margin:.4em 0}
 li::marker{color:var(--text-3)}
 ol>li::marker{font-family:var(--f-sans);font-weight:600;font-size:.92em}
 li>ul,li>ol{margin:.3em 0 .2em}
-strong{font-weight:600}
+strong{font-weight:800}
 h1,h2,h3,h4,h5,h6{font-family:var(--f-sans);font-weight:600;color:var(--text);text-wrap:balance}
 h3{font-size:1.5rem;line-height:1.38;letter-spacing:-.01em;margin:2.4em 0 .65em}
 h3 .num{font-weight:500;color:var(--text-3);margin-right:.55em;font-variant-numeric:tabular-nums}
 h4{font-size:1.14rem;line-height:1.5;margin:1.9em 0 .45em}
 code,kbd{font-family:var(--f-mono);font-size:.84em}
 :not(pre)>code{background:var(--surface);padding:.12em .36em;border-radius:5px;word-break:break-word}
+/* 燕麦色底的容器里，行内代码换成纸色底加细边，才能和底色分开 */
+:is(.tbl,.callout,.recap,.twocol,.lab,.fig) :not(pre)>code{background:var(--bg);box-shadow:inset 0 0 0 1px var(--border-2)}
 .gl{color:var(--text-2)}
 hr{border:0;border-top:1px solid var(--border-2);margin:2.5em 0}
 .muted{color:var(--text-2)}
@@ -193,7 +195,6 @@ main{min-width:0;padding:64px 56px 160px}
 .callout .ct{font-family:var(--f-sans);font-weight:600;font-size:.94rem;margin-bottom:6px;display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline}
 .callout .ct small{font-weight:400;font-family:var(--f-mono);font-size:.74rem;color:var(--text-3);overflow-wrap:anywhere}
 .callout>div{min-width:0}
-.callout :not(pre)>code{background:var(--bg)}
 .callout.dsh>svg{color:var(--text)}
 .callout.tip{background:var(--olive-soft)} .callout.tip>svg,.callout.tip .ct{color:var(--olive)}
 .callout.warn{background:var(--fig-soft)} .callout.warn>svg,.callout.warn .ct{color:var(--fig)}
@@ -201,7 +202,6 @@ main{min-width:0;padding:64px 56px 160px}
 .callout.run{background:var(--kraft-soft)} .callout.run>svg,.callout.run .ct{color:var(--kraft)}
 .callout.analogy{background:none;box-shadow:inset 0 0 0 1px var(--border-2)}
 .callout.analogy>svg{color:var(--clay)}
-.callout.analogy :not(pre)>code{background:var(--surface)}
 .callout :is(.code,pre,.out){background:var(--bg)}
 .callout .code{margin:.6em 0 1.1em}
 
@@ -230,7 +230,6 @@ th,td{text-align:left;vertical-align:top;padding:13px 20px 13px 0;border-bottom:
 th:last-child,td:last-child{padding-right:0}
 th{font-family:var(--f-sans);font-weight:600;font-size:.84rem;color:var(--text)}
 tr:last-child td{border-bottom:0}
-td :not(pre)>code{background:var(--bg)}
 td code{white-space:nowrap}
 .tbl.wrapcode td code{white-space:normal}
 
