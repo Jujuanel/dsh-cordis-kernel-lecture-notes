@@ -128,7 +128,7 @@ function renderPanel(){
     return`<li data-k="${k}"><button class="rd-item" type="button">`+
       `<span class="rd-meta"><span>${esc(d.chapter)}</span><time>${esc(relTime(m.t))}</time></span>`+
       `<span class="rd-name">${esc(m.name||d.section||d.chapter)}</span>`+
-      (d.snippet?`<span class="rd-snip"><mark>${esc(d.snippet)}</mark></span>`:'')+
+      (d.snippet?`<span class="rd-snip">${esc(d.snippet)}</span>`:'')+
       `</button><span class="rd-acts">`+
       `<button class="rd-act" type="button" data-act="rename" aria-label="重命名" title="重命名"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10.5 2.5l3 3L5.5 13.5H2.5v-3z"/></svg></button>`+
       `<button class="rd-act" type="button" data-act="del" aria-label="删除" title="删除"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5"/></svg></button></span></li>`;
@@ -168,8 +168,27 @@ function refresh(){
   if(!panel.hidden)renderPanel();
   renderHighlights();
 }
-function addMark(){
+/* 书签落在哪一块：有选中文字就用选区所在的块；否则用视口里第一个完整露出的块，不取被顶栏遮住一半的上一块 */
+function markAnchor(){
+  const sel=getSelection();
+  if(sel&&!sel.isCollapsed&&sel.rangeCount){
+    const n=sel.getRangeAt(0).startContainer,el=n.nodeType===1?n:n.parentElement;
+    const b=el&&el.closest(BLOCKS),ch=b&&b.closest('section.chapter');
+    if(ch&&chIndex.has(ch.id))return{ch:ch.id,i:blocksOf(ch).indexOf(b),f:0};
+  }
   const a=anchorAt(READ_LINE);
+  if(!a||a.i<0)return a;
+  const bs=blocksOf(document.getElementById(a.ch));
+  if(bs[a.i].getBoundingClientRect().top>=READ_LINE-4)return a;
+  for(let i=a.i+1;i<bs.length;i++){
+    if(!visible(bs[i])||bs[i].contains(bs[a.i]))continue;
+    const top=bs[i].getBoundingClientRect().top;
+    if(top>=READ_LINE-4)return top<innerHeight*.6?{ch:a.ch,i,f:0}:a;
+  }
+  return a;
+}
+function addMark(){
+  const a=markAnchor();
   if(!a||a.i<0){showToast('封面和章节开头之前不能加书签，先往下读一点');return}
   const m={ch:a.ch,i:a.i,f:0,name:'',t:Date.now()};
   const same=marks.find(x=>x.ch===m.ch&&x.i===m.i);

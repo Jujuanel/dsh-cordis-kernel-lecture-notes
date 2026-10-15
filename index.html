@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/dsh-whale.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&family=Noto+Sans+SC:wght@300..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Noto+Serif+SC:wght@300..900&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Noto+Serif+SC:wght@300..900&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* 版式参照 Anthropic Engineering 文章页：象牙白纸面、墨色文字、燕麦色面板；无衬线标题配衬线正文；
    结构靠粗墨线与留白区分，颜色只用来标明语义（提示框来源、图中的状态）。 */
@@ -25,6 +25,8 @@
   --tk-com:#8a887f; --tk-kw:#a4402f; --tk-str:#56703a; --tk-fn:#2f659a; --tk-num:#b4532f; --tk-prop:#6e4f96; --tk-punc:#6b6a63;
   --f-sans:"Hanken Grotesk","Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
   --f-serif:"Source Serif 4","Noto Serif SC","Songti SC","STSong",Georgia,serif;
+  /* 正文：英文用衬线 Source Serif 4，中文用思源黑体 */
+  --f-body:"Source Serif 4","Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --radius:12px; --radius-s:8px;
   --measure:680px; --top:60px;
@@ -59,7 +61,8 @@
 /* ---------- 基础排版 ---------- */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top) + 24px);-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-serif);font-size:17px;font-weight:450;line-height:1.85;text-rendering:optimizeLegibility;font-kerning:normal}
+/* 中文黑体只加载固定字重，按 400 显示；可变字重的 Source Serif 4 用 font-variation-settings 单独调到 450，加粗同理 */
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:17px;font-weight:400;font-variation-settings:"wght" 450;line-height:1.85;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-kerning:normal}
 ::selection{background:var(--clay-soft)}
 a{color:inherit;text-decoration:underline;text-decoration-color:var(--border-2);text-decoration-thickness:1px;text-underline-offset:.22em;transition:text-decoration-color .15s}
 a:hover{text-decoration-color:currentColor}
@@ -70,8 +73,8 @@ li{margin:.4em 0}
 li::marker{color:var(--text-3)}
 ol>li::marker{font-family:var(--f-sans);font-weight:600;font-size:.92em}
 li>ul,li>ol{margin:.3em 0 .2em}
-strong{font-weight:800}
-h1,h2,h3,h4,h5,h6{font-family:var(--f-sans);font-weight:600;color:var(--text);text-wrap:balance}
+strong{font-weight:700;font-variation-settings:"wght" 800}
+h1,h2,h3,h4,h5,h6{font-family:var(--f-sans);font-weight:600;color:var(--text);text-wrap:balance;-webkit-font-smoothing:auto}
 h3{font-size:1.5rem;line-height:1.38;letter-spacing:-.01em;margin:2.4em 0 .65em}
 h3 .num{font-weight:500;color:var(--text-3);margin-right:.55em;font-variant-numeric:tabular-nums}
 h4{font-size:1.14rem;line-height:1.5;margin:1.9em 0 .45em}
