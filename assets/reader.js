@@ -7,8 +7,8 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const K_POS='cordis-v2-pos',K_BM='cordis-v2-bookmarks';
 const BLOCKS='h2,h3,h4,p,li,pre,blockquote,tr,figure';
-const READ_LINE=84; /* 顶栏 56px 之下的阅读基线 */
-const SCROLL_PAD=76; /* 与 html 的 scroll-padding-top 一致 */
+const READ_LINE=96; /* 顶栏 60px 之下的阅读基线 */
+const SCROLL_PAD=84; /* 与 html 的 scroll-padding-top 一致 */
 
 const content=$('#main .content');
 const chapters=$$('section.chapter',content);
@@ -152,11 +152,12 @@ function rename(li,m){
   inp.addEventListener('blur',()=>finish(true));
 }
 function renderMarkers(){
-  const base=content.getBoundingClientRect().top;
+  const base=content.getBoundingClientRect();
+  const gap=matchMedia('(max-width:720px)').matches?17:30;
   layer.innerHTML=marks.map((m,k)=>{
     const el=resolve(m);if(!el)return'';
-    const d=describe(m);
-    return`<span class="rd-pin" style="top:${el.getBoundingClientRect().top-base}px" title="书签：${esc(m.name||d.section||d.chapter)}" data-k="${k}">${ICON_BM}</span>`;
+    const d=describe(m),r=el.getBoundingClientRect();
+    return`<span class="rd-pin" style="top:${r.top-base.top}px;left:${r.left-base.left-gap}px" title="书签：${esc(m.name||d.section||d.chapter)}" data-k="${k}">${ICON_BM}</span>`;
   }).join('');
 }
 function refresh(){
