@@ -4,6 +4,8 @@
 
 ## 阅读
 
+在线阅读：<https://dsh-cordis-kernel-lecture-notes.pages.dev/>
+
 整份讲义是一个静态页面，直接用浏览器打开 `index.html` 即可，不需要构建。
 
 页面会在浏览器本地记住阅读进度、上次阅读位置和书签，数据只保存在当前浏览器中。
