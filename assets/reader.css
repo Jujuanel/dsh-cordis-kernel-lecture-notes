@@ -1,7 +1,7 @@
-/* 阅读位置与书签：沿用讲义的颜色变量、按钮与圆角；书签用荧光笔色常驻高亮 */
-:root{--mark:#f3e4bd;--mark-deep:#e8c97c}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--mark:#463b22;--mark-deep:#6e5728}}
-:root[data-theme="dark"]{--mark:#463b22;--mark-deep:#6e5728}
+/* 阅读位置与书签：沿用讲义的颜色变量、按钮与圆角；书签处用 DeepSeek 浅蓝常驻高亮 */
+:root{--mark:#dfe8fb;--mark-deep:#bdd0f6}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--mark:#202e4b;--mark-deep:#2e4a85}}
+:root[data-theme="dark"]{--mark:#202e4b;--mark-deep:#2e4a85}
 
 /* ---------- 正文里的书签高亮 ---------- */
 .content .rd-mark{--rd-base:var(--mark);background-color:var(--mark);box-shadow:0 0 0 5px var(--mark);border-radius:3px}
@@ -14,8 +14,8 @@
 
 /* ---------- 顶栏按钮 ---------- */
 .rd-bm-btn{position:relative}
-.rd-bm-btn.on{background:var(--surface)}
-.rd-count{position:absolute;top:1px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:var(--text);color:var(--bg);font-family:var(--f-sans);font-size:.66rem;font-weight:600;line-height:16px;text-align:center;font-variant-numeric:tabular-nums}
+.rd-bm-btn.on{background:var(--blue-soft);color:var(--blue-ink)}
+.rd-count{position:absolute;top:1px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:var(--blue);color:#fff;font-family:var(--f-sans);font-size:.66rem;font-weight:600;line-height:16px;text-align:center;font-variant-numeric:tabular-nums}
 .rd-count[hidden]{display:none}
 
 /* ---------- 书签面板 ---------- */
@@ -27,8 +27,8 @@
 .rd-head{display:flex;align-items:center;gap:6px;padding:14px 10px 12px 18px;border-bottom:1px solid var(--border)}
 .rd-head h5{margin:0 auto 0 0;font-size:1rem;font-weight:600;display:flex;align-items:baseline;gap:8px}
 .rd-n{font-size:.82rem;font-weight:500;color:var(--text-3);font-variant-numeric:tabular-nums}
-.rd-add{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.84rem;font-weight:500;color:var(--text);background:none;border:0;border-radius:8px;padding:6px 8px 6px 10px;cursor:pointer}
-.rd-add:hover{background:var(--surface)}
+.rd-add{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.84rem;font-weight:500;color:var(--blue-ink);background:none;border:0;border-radius:999px;padding:6px 8px 6px 12px;cursor:pointer}
+.rd-add:hover{background:var(--blue-soft)}
 .rd-add kbd{background:var(--bg);box-shadow:inset 0 0 0 1px var(--border-2)}
 .rd-close{width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:var(--text-3);cursor:pointer}
 .rd-close:hover{background:var(--surface);color:var(--text)}
@@ -50,7 +50,7 @@
 .rd-act:hover{color:var(--text)}
 .rd-act[data-act=del]:hover{background:var(--fig-soft);color:var(--fig);box-shadow:none}
 .rd-act svg{width:14px;height:14px}
-.rd-input{display:block;width:100%;margin:0;font:inherit;font-weight:600;color:var(--text);background:var(--bg);border:1px solid var(--text);border-radius:6px;padding:3px 8px;outline:none}
+.rd-input{display:block;width:100%;margin:0;font:inherit;font-weight:600;color:var(--text);background:var(--bg);border:1px solid var(--blue);border-radius:6px;padding:3px 8px;outline:none;box-shadow:0 0 0 3px var(--blue-soft)}
 
 .rd-empty{display:grid;justify-items:center;gap:10px;padding:32px 24px 28px;text-align:center;color:var(--text-2);font-size:.88rem;line-height:1.7}
 .rd-empty svg{width:28px;height:28px;color:var(--text-3)}
@@ -68,8 +68,9 @@
 .rd-sub{opacity:.78;font-size:.84rem}
 .rd-toast .btn{flex:none;padding:6px 12px;font-size:.86rem;background:none;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 35%,transparent)}
 .rd-toast .btn:hover{border-color:var(--bg)}
-.rd-toast .btn.pri{background:var(--bg);color:var(--text);border-color:var(--bg)}
-.rd-toast .btn.pri:hover{background:color-mix(in srgb,var(--bg) 85%,var(--text))}
+.rd-toast .btn{border-radius:999px}
+.rd-toast .btn.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
+.rd-toast .btn.pri:hover{background:color-mix(in srgb,var(--blue) 88%,#000)}
 .rd-x{flex:none;width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:inherit;opacity:.6;cursor:pointer}
 .rd-x:hover{opacity:1;background:color-mix(in srgb,var(--bg) 12%,transparent)}
 .rd-x svg{width:14px;height:14px}
