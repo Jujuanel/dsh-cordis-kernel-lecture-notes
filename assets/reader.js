@@ -75,9 +75,9 @@ let toastTimer=0;
 function showToast(html,{sticky=false,actions=[]}={}){
   clearTimeout(toastTimer);
   toast.innerHTML=`<div class="rd-toast-body">${html}</div>`+actions.map((x,i)=>`<button class="btn${x.pri?' pri':''}" type="button" data-i="${i}">${esc(x.label)}</button>`).join('')+
-    `<button class="rd-x" type="button" aria-label="关闭"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>`;
+    (sticky?`<button class="rd-x" type="button" aria-label="关闭"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>`:'');
   $$('button[data-i]',toast).forEach(b=>b.addEventListener('click',()=>{hideToast();actions[+b.dataset.i].run()}));
-  $('.rd-x',toast).addEventListener('click',hideToast);
+  $('.rd-x',toast)?.addEventListener('click',hideToast);
   toast.hidden=false;
   if(!sticky)toastTimer=setTimeout(hideToast,2800);
 }

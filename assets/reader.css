@@ -1,7 +1,7 @@
-/* 阅读位置与书签：沿用讲义的颜色变量、按钮与圆角；书签处用 DeepSeek 浅蓝常驻高亮 */
-:root{--mark:#dfe8fb;--mark-deep:#bdd0f6}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--mark:#202e4b;--mark-deep:#2e4a85}}
-:root[data-theme="dark"]{--mark:#202e4b;--mark-deep:#2e4a85}
+/* 阅读位置与书签：沿用讲义的颜色变量、按钮与圆角；书签处用 DeepSeek 浅蓝常驻高亮，提示条取 DeepSeek 开放平台的通知卡片配色 */
+:root{--mark:#dfe8fb;--mark-deep:#bdd0f6;--notice-bg:#e4edfd;--notice-ink:#3964fe;--notice-btn:#3964fe;--notice-btn-hover:#5686fe}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--mark:#202e4b;--mark-deep:#2e4a85;--notice-bg:#34415b;--notice-ink:#679efe;--notice-btn:#679efe}}
+:root[data-theme="dark"]{--mark:#202e4b;--mark-deep:#2e4a85;--notice-bg:#34415b;--notice-ink:#679efe;--notice-btn:#679efe}
 
 /* ---------- 正文里的书签高亮 ---------- */
 .content .rd-mark{--rd-base:var(--mark);background-color:var(--mark);box-shadow:0 0 0 5px var(--mark);border-radius:3px}
@@ -60,19 +60,16 @@
 .rd-foot span{display:inline-flex;align-items:center;gap:4px}
 
 /* ---------- 提示条 ---------- */
-.rd-toast{position:fixed;z-index:80;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(-50%);display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 10px 10px 20px;background:var(--text);color:var(--bg);border-radius:var(--radius);box-shadow:0 16px 48px -12px rgba(20,20,19,.35);font-family:var(--f-sans);font-size:.9rem;animation:rd-in .2s ease-out}
+.rd-toast{position:fixed;z-index:80;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(-50%);display:flex;align-items:flex-end;gap:16px;max-width:calc(100vw - 32px);padding:12px 12px 12px 16px;background:var(--notice-bg);color:var(--notice-ink);border-radius:16px;box-shadow:0 12px 40px -16px rgba(20,20,19,.3);font-family:var(--f-sans);font-size:14px;line-height:22px;animation:rd-in .2s ease-out}
 .rd-toast[hidden]{display:none}
-.rd-toast-body{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;min-width:0;line-height:1.5}
+.rd-toast-body{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 10px;min-width:0;padding:5px 0}
 .rd-toast-body b{font-weight:600}
-.rd-k{opacity:.62;font-size:.82rem}
-.rd-sub{opacity:.78;font-size:.84rem}
-.rd-toast .btn{flex:none;padding:6px 12px;font-size:.86rem;background:none;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 35%,transparent)}
-.rd-toast .btn:hover{border-color:var(--bg)}
-.rd-toast .btn{border-radius:999px}
-.rd-toast .btn.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
-.rd-toast .btn.pri:hover{background:color-mix(in srgb,var(--blue) 88%,#000)}
-.rd-x{flex:none;width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:inherit;opacity:.6;cursor:pointer}
-.rd-x:hover{opacity:1;background:color-mix(in srgb,var(--bg) 12%,transparent)}
+.rd-k{opacity:.75}
+.rd-sub{opacity:.85}
+.rd-toast .btn{flex:none;height:32px;min-width:64px;justify-content:center;padding:0 14px;font-size:14px;font-weight:500;line-height:22px;border:0;border-radius:999px;background:var(--notice-btn);color:#fff}
+.rd-toast .btn:hover:not(:disabled){background:var(--notice-btn-hover)}
+.rd-x{flex:none;width:32px;height:32px;margin-left:-8px;display:grid;place-items:center;border:0;border-radius:999px;background:none;color:inherit;opacity:.7;cursor:pointer}
+.rd-x:hover{opacity:1;background:color-mix(in srgb,var(--notice-ink) 12%,transparent)}
 .rd-x svg{width:14px;height:14px}
 @keyframes rd-in{from{opacity:0;transform:translate(-50%,8px)}}
 
